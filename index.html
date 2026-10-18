@@ -63,6 +63,7 @@ main{padding:16px 14px 42px}
 .section-label{color:#8bdfff;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin:18px 2px 10px}
 @media(max-width:560px){.hero{padding:24px 16px 20px}.logo-mark{width:100px;height:100px}.feature-grid{gap:8px}.feature{padding:13px;min-height:106px}.panel{padding:16px}.statgrid{gap:7px}.stat{padding:10px 8px}}
 
+.topic-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:0 0 18px}.topic-card{display:flex;gap:10px;align-items:flex-start;text-align:left;padding:13px;border:1px solid #1d4d7d;border-radius:15px;background:linear-gradient(145deg,#0c2c55,#071d3c);color:#f2f8ff;min-height:76px}.topic-card .num{display:grid;place-items:center;flex:0 0 30px;height:30px;border-radius:10px;background:#123e70;color:#75e2ff;font-weight:900}.topic-card strong{display:block;font-size:13px;line-height:1.35}.topic-card small{display:block;color:#b7d0ed;font-size:11px;margin-top:4px;font-weight:500}.section-label{color:#8bdfff;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin:18px 2px 10px}.app-intro{color:#c6dcf8;line-height:1.5;margin:-4px 2px 14px;font-size:14px}.count-pill{display:inline-block;border:1px solid #2b628e;background:#0b2d52;color:#8de6ff;border-radius:999px;padding:4px 9px;font-size:11px;font-weight:800;margin-left:6px}@media(max-width:560px){.topic-grid{gap:7px}.topic-card{padding:11px;min-height:82px}.topic-card .num{flex-basis:27px;height:27px}}
 </style>
 </head>
 <body>
@@ -89,10 +90,24 @@ main{padding:16px 14px 42px}
  <button class="feature" id="featureProgress"><span class="feature-icon">▥</span><strong>My Progress</strong><small>Review your current stats</small></button>
  <button class="feature" id="featureTopics"><span class="feature-icon">▣</span><strong>Business Topics</strong><small>Business and industry English</small></button>
 </div>
+<div class="section-label">Course topics · 10 lectures</div>
+<p class="app-intro">Choose a topic to focus your study. The teacher’s vocabulary bank and exam questions remain the core of this trainer.</p>
+<div class="topic-grid" id="topicGrid">
+ <button class="topic-card" data-search="job"><span class="num">01</span><span><strong>Work and Jobs</strong><small>Jobs, duties and work patterns</small></span></button>
+ <button class="topic-card" data-search="recruitment"><span class="num">02</span><span><strong>Recruitment and Selection</strong><small>Hiring and job applications</small></span></button>
+ <button class="topic-card" data-search="salary"><span class="num">03</span><span><strong>Pay and Benefits</strong><small>Salary, rewards and benefits</small></span></button>
+ <button class="topic-card" data-search="labour"><span class="num">04</span><span><strong>Problems at Work</strong><small>Workplace issues and relations</small></span></button>
+ <button class="topic-card" data-search="manufacturing"><span class="num">05</span><span><strong>Manufacturing and Services</strong><small>Production, quality and services</small></span></button>
+ <button class="topic-card" data-search="career ladder"><span class="num">06</span><span><strong>People and Workplaces</strong><small>Career ladder and workplace</small></span></button>
+ <button class="topic-card" data-search="marketing"><span class="num">07</span><span><strong>Marketing and Market Orientation</strong><small>Markets and customers</small></span></button>
+ <button class="topic-card" data-search="brand"><span class="num">08</span><span><strong>Products and Brands</strong><small>Products, ranges and branding</small></span></button>
+ <button class="topic-card" data-search="price"><span class="num">09</span><span><strong>Price and Place</strong><small>Pricing and distribution</small></span></button>
+ <button class="topic-card" data-search="promotion"><span class="num">10</span><span><strong>Promotion</strong><small>Advertising and sales promotion</small></span></button>
+</div>
 <div class="section-label">Your learning dashboard</div>
 <div class="statgrid">
- <div class="stat"><strong id="totalQ">0</strong><span>вопросов</span></div>
- <div class="stat"><strong id="totalW">0</strong><span>слов и фраз</span></div>
+ <div class="stat"><strong id="totalQ">100</strong><span>teacher questions</span></div>
+ <div class="stat"><strong id="totalW">515</strong><span>teacher vocabulary items</span></div>
  <div class="stat"><strong id="savedCount">0</strong><span>слов на повторение</span></div>
 </div>
 <div class="tabs"><button class="tab active" id="quizTab">Practice &amp; Tests</button><button class="tab" id="vocabTab">Vocabulary</button></div>
@@ -157,7 +172,8 @@ el('startLearning').onclick=showLearning;
 el('featureLessons').onclick=()=>{el('vocabTab').click();document.getElementById('vocabPanel').scrollIntoView({behavior:'smooth',block:'start'})};
 el('featurePractice').onclick=showLearning;
 el('featureProgress').onclick=()=>{document.querySelector('.statgrid').scrollIntoView({behavior:'smooth',block:'center'})};
-el('featureTopics').onclick=()=>{el('vocabTab').click();document.getElementById('wordSearch').value='business';renderWordList();document.getElementById('vocabPanel').scrollIntoView({behavior:'smooth',block:'start'})};
+el('featureTopics').onclick=()=>{document.getElementById('topicGrid').scrollIntoView({behavior:'smooth',block:'start'})};
+document.querySelectorAll('.topic-card').forEach(btn=>btn.addEventListener('click',()=>{el('vocabTab').click();el('wordSearch').value=btn.dataset.search;renderWordList();el('vocabPanel').scrollIntoView({behavior:'smooth',block:'start'});}));
 
 saveData();startQuiz();renderWord();
 </script>
