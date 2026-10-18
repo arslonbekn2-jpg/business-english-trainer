@@ -173,7 +173,22 @@ el('featureLessons').onclick=()=>{el('vocabTab').click();document.getElementById
 el('featurePractice').onclick=showLearning;
 el('featureProgress').onclick=()=>{document.querySelector('.statgrid').scrollIntoView({behavior:'smooth',block:'center'})};
 el('featureTopics').onclick=()=>{document.getElementById('topicGrid').scrollIntoView({behavior:'smooth',block:'start'})};
-document.querySelectorAll('.topic-card').forEach(btn=>btn.addEventListener('click',()=>{el('vocabTab').click();el('wordSearch').value=btn.dataset.search;renderWordList();el('vocabPanel').scrollIntoView({behavior:'smooth',block:'start'});}));
+function openTopic(keyword){
+  const search=el('wordSearch');
+  search.value=keyword;
+  el('vocabPanel').classList.remove('hidden');
+  el('quizPanel').classList.add('hidden');
+  el('vocabTab').classList.add('active');
+  el('quizTab').classList.remove('active');
+  renderWordList();
+  el('vocabPanel').scrollIntoView({behavior:'auto',block:'start'});
+}
+document.querySelectorAll('.topic-card').forEach(btn=>{
+  btn.type='button';
+  btn.style.cursor='pointer';
+  btn.addEventListener('click',function(event){event.preventDefault();openTopic(this.getAttribute('data-search')||'');});
+  btn.addEventListener('touchend',function(event){event.preventDefault();openTopic(this.getAttribute('data-search')||'');},{passive:false});
+});
 
 saveData();startQuiz();renderWord();
 </script>
